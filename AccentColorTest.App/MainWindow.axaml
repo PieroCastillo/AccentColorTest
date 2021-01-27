@@ -7,14 +7,23 @@
         mc:Ignorable="d" SizeToContent="WidthAndHeight"
         x:Class="AccentColorTest.App.MainWindow"
         Title="AccentColorTest.App">
+	<Window.Styles>
+		<StyleInclude Source="avares://AccentColorTest/AccentColors.axaml"/>
+	</Window.Styles>
 	<Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="auto,auto,auto"
-		  Margin="10">
-		<l:ColorUnit ColorName="AccentColor"/>
-		<l:ColorUnit ColorName="AccentColorDark1" Grid.Column="0" Grid.Row="1"/>
-		<l:ColorUnit ColorName="AccentColorDark2"  Grid.Column="1" Grid.Row="1"/>
-		<l:ColorUnit ColorName="AccentColorDark3"  Grid.Column="2" Grid.Row="1"/>
-		<l:ColorUnit ColorName="AccentColorLight1"  Grid.Column="0" Grid.Row="2"/>
-		<l:ColorUnit ColorName="AccentColorLight2" Grid.Column="1" Grid.Row="2"/>
-		<l:ColorUnit ColorName="AccentColorLight3" Grid.Column="2" Grid.Row="2"/>
+	  Margin="10">
+		<l:ColorUnit ColorName="AccentColor" Background="{DynamicResource AccentBrush}"/>
+		<l:ColorUnit ColorName="AccentColorDark1"  Background="{DynamicResource AccentBrushDark1}"
+					 Grid.Column="0" Grid.Row="1"/>
+		<l:ColorUnit ColorName="AccentColorDark2"  Background="{DynamicResource AccentBrushDark2}"
+						 Grid.Column="1" Grid.Row="1"/>
+		<l:ColorUnit ColorName="AccentColorDark3"  Background="{DynamicResource AccentBrushDark3}"
+					 Grid.Column="2" Grid.Row="1"/>
+		<l:ColorUnit ColorName="AccentColorLight1"  Background="{DynamicResource AccentBrushLight1}"
+					 Grid.Column="0" Grid.Row="2"/>
+		<l:ColorUnit ColorName="AccentColorLight2"  Background="{DynamicResource AccentBrushLight2}"
+					 Grid.Column="1" Grid.Row="2"/>
+		<l:ColorUnit ColorName="AccentColorLight3"  Background="{DynamicResource AccentBrushLight3}"
+					 Grid.Column="2" Grid.Row="2"/>
 	</Grid>
 </Window>

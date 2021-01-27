@@ -1,0 +1,18 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		x:Class="AccentColorTest.AccentColors">
+  <Design.PreviewWith>
+    <Border Padding="20" Background="Blue">
+      <!-- Add Controls for Previewer Here -->
+    </Border>
+  </Design.PreviewWith>
+	<Styles.Resources>
+		<SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource SystemAccentColor}"/>
+		<SolidColorBrush x:Key="AccentBrushLight1" Color="{DynamicResource SystemAccentColorLight1}"/>
+		<SolidColorBrush x:Key="AccentBrushLight2" Color="{DynamicResource SystemAccentColorLight2}"/>
+		<SolidColorBrush x:Key="AccentBrushLight3" Color="{DynamicResource SystemAccentColorLight3}"/>
+		<SolidColorBrush x:Key="AccentBrushDark1" Color="{DynamicResource SystemAccentColorDark1}"/>
+		<SolidColorBrush x:Key="AccentBrushDark2" Color="{DynamicResource SystemAccentColorDark2}"/>
+		<SolidColorBrush x:Key="AccentBrushDark3" Color="{DynamicResource SystemAccentColorDark3}"/>
+	</Styles.Resources>
+</Styles>
