@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:l="clr-namespace:AccentColorTest.App;assembly=AccentColorTest.App"
+		CanResize="False"
+        mc:Ignorable="d" SizeToContent="WidthAndHeight"
+        x:Class="AccentColorTest.App.MainWindow"
+        Title="AccentColorTest.App">
+	<Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="auto,auto,auto"
+		  Margin="10">
+		<l:ColorUnit ColorName="AccentColor"/>
+		<l:ColorUnit ColorName="AccentColorDark1" Grid.Column="0" Grid.Row="1"/>
+		<l:ColorUnit ColorName="AccentColorDark2"  Grid.Column="1" Grid.Row="1"/>
+		<l:ColorUnit ColorName="AccentColorDark3"  Grid.Column="2" Grid.Row="1"/>
+		<l:ColorUnit ColorName="AccentColorLight1"  Grid.Column="0" Grid.Row="2"/>
+		<l:ColorUnit ColorName="AccentColorLight2" Grid.Column="1" Grid.Row="2"/>
+		<l:ColorUnit ColorName="AccentColorLight3" Grid.Column="2" Grid.Row="2"/>
+	</Grid>
+</Window>

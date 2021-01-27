@@ -21,7 +21,7 @@ namespace AccentColorTest
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows); //Checa si es windows
             var keyName = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\DWM\\"; //Link de acceso
-            var valueName = "ColorizationColor"; //Key de la dirección
+            var valueName = "AccentColor"; //Key de la dirección
             var defaultIntValue = 30935;//Valor default del color en Int
             var defaultValue = "#FF0078D7";// default Avalonia Accent Color
 

@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			xmlns:l="clr-namespace:AccentColorTest.App;assembly=AccentColorTest.App"
+             mc:Ignorable="d" Width="150" Height="150"
+             x:Class="AccentColorTest.App.ColorUnit">
+	<Border BorderThickness="2.5" BorderBrush="Gray" BoxShadow="0 0 5 0 Black"
+			Background="{Binding Background}">
+		<TextBlock Text="{Binding $parent[l:ColorUnit].ColorName}"
+				   VerticalAlignment="Bottom"
+				   Padding="5"
+				   FontWeight="Bold"/><!--Color-->
+	</Border>
+</UserControl>
