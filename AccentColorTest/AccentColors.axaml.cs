@@ -19,11 +19,7 @@ namespace AccentColorTest
         {
             AvaloniaXamlLoader.Load(this);
 
-            var tm = new Stopwatch();
-            tm.Start();
-
-
-            var accentcolor = Color.Parse($"{GetAccentColor()}");
+            var accentcolor = GetAccentColor();
             var light1 = ChangeLuminosity(accentcolor, 0.3);
             var light2 = ChangeLuminosity(accentcolor, 0.5);
             var light3 = ChangeLuminosity(accentcolor, 0.7);
@@ -39,29 +35,20 @@ namespace AccentColorTest
             this.Resources.Add("SystemAccentColorDark1", dark1);
             this.Resources.Add("SystemAccentColorDark2", dark2);
             this.Resources.Add("SystemAccentColorDark3", dark3);
-
-            tm.Stop();
-
-            Debug.WriteLine($"SystemAccentColors added, colors load took {tm.ElapsedMilliseconds} ms");
         }
 
-        private object GetAccentColor()
+        private Color GetAccentColor()
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows); //check if the OS is Windows
             var defaultValue = "#FF0078D7";// default Avalonia Accent Color
 
-            string value;
-
             switch (isWindows)
             {
                 case true:
-                    value = GetColorByTypeName("ImmersiveSystemAccent").ToString();
-                    break;
+                    return GetAccentColorCore("ImmersiveSystemAccent");
                 case false:
-                    value = defaultValue; 
-                    break;
+                    return Color.Parse(defaultValue);
             }
-            return value;
         }
 
         [DllImport("uxtheme.dll", EntryPoint = "#95", CharSet = CharSet.Unicode)]
@@ -71,7 +58,7 @@ namespace AccentColorTest
         [DllImport("uxtheme.dll", EntryPoint = "#98", CharSet = CharSet.Unicode)]
         internal static extern uint GetImmersiveUserColorSetPreference(bool bForceCheckRegistry, bool bSkipCheckOnFail);
 
-        public static Color GetColorByTypeName(string name)
+        private static Color GetAccentColorCore(string name)
         {
             var colorSet = GetImmersiveUserColorSetPreference(false, false);
             var colorType = GetImmersiveColorTypeFromName(name);
