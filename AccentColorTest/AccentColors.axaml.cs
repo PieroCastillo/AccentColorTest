@@ -19,13 +19,17 @@ namespace AccentColorTest
         {
             AvaloniaXamlLoader.Load(this);
 
+            var tm = new Stopwatch();
+            tm.Start();
+
+
             var accentcolor = Color.Parse($"{GetAccentColor()}");
-            var light1 = ChangeLuminosity(accentcolor, 0.3d);
-            var light2 = ChangeLuminosity(accentcolor, 0.6d);
-            var light3 = ChangeLuminosity(accentcolor, 0.8d);
+            var light1 = ChangeLuminosity(accentcolor, 0.3);
+            var light2 = ChangeLuminosity(accentcolor, 0.5);
+            var light3 = ChangeLuminosity(accentcolor, 0.7);
             var dark1 = ChangeLuminosity(accentcolor, -0.3);
-            var dark2 = ChangeLuminosity(accentcolor, -0.6);
-            var dark3 = ChangeLuminosity(accentcolor, -0.8);
+            var dark2 = ChangeLuminosity(accentcolor, -0.5);
+            var dark3 = ChangeLuminosity(accentcolor, -0.7);
 
 
             this.Resources.Add("SystemAccentColor", accentcolor);
@@ -36,34 +40,45 @@ namespace AccentColorTest
             this.Resources.Add("SystemAccentColorDark2", dark2);
             this.Resources.Add("SystemAccentColorDark3", dark3);
 
+            tm.Stop();
 
-            Debug.WriteLine("SystemAccentColor added");
+            Debug.WriteLine($"SystemAccentColors added, colors load took {tm.ElapsedMilliseconds} ms");
         }
 
         private object GetAccentColor()
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows); //check if the OS is Windows
-            var keyName = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\DWM\\"; //Key link
-            var valueName = "AccentColor"; //"AccentColor"; //Value name
-            var defaultIntValue = 30935;//default Avalonia Accent Color as Int
             var defaultValue = "#FF0078D7";// default Avalonia Accent Color
 
-            object value = new object();
+            string value;
 
             switch (isWindows)
             {
                 case true:
-                    var c = (int)Registry.GetValue(keyName, valueName, defaultValue);//gets the value
-                    var prev_color = Color.Parse(("#" + c.ToString("X2")));//parse a previous color, windows stores the accent color backwards
-
-                    value = new Color(prev_color.A, prev_color.B, prev_color.G, prev_color.R).ToString() ??
-                          ("#" + defaultIntValue.ToString("X2")); //return the System accent color
+                    value = GetColorByTypeName("ImmersiveSystemAccent").ToString();
                     break;
                 case false:
-                    value = defaultValue; //return default color
+                    value = defaultValue; 
                     break;
             }
             return value;
+        }
+
+        [DllImport("uxtheme.dll", EntryPoint = "#95", CharSet = CharSet.Unicode)]
+        internal static extern uint GetImmersiveColorFromColorSetEx(uint dwImmersiveColorSet, uint dwImmersiveColorType, bool bIgnoreHighContrast, uint dwHighContrastCacheMode);
+        [DllImport("uxtheme.dll", EntryPoint = "#96", CharSet = CharSet.Unicode)]
+        internal static extern uint GetImmersiveColorTypeFromName(string name);
+        [DllImport("uxtheme.dll", EntryPoint = "#98", CharSet = CharSet.Unicode)]
+        internal static extern uint GetImmersiveUserColorSetPreference(bool bForceCheckRegistry, bool bSkipCheckOnFail);
+
+        public static Color GetColorByTypeName(string name)
+        {
+            var colorSet = GetImmersiveUserColorSetPreference(false, false);
+            var colorType = GetImmersiveColorTypeFromName(name);
+            var rawColor = GetImmersiveColorFromColorSetEx(colorSet, colorType, false, 0);
+
+            var bytes = BitConverter.GetBytes(rawColor);
+            return Color.FromArgb(bytes[3], bytes[0], bytes[1], bytes[2]);
         }
 
         private Color ChangeLuminosity(Color color, double correctionFactor)
